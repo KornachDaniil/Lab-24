@@ -17,7 +17,8 @@ public:
 
 	void insert(T number)
 	{	
-		while (size == 0) {
+		if(size == 0)
+		{
 			plenty.push_back(number);
 			size++;
 		}
@@ -94,6 +95,7 @@ int main()
 	plenty.insert(11);
 	plenty.insert(10);
 	plenty.insert(0);
+	plenty.insert(2);
 
 	std::cout << plenty.Get_size() << std::endl; // Debug
 
