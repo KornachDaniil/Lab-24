@@ -52,10 +52,10 @@ public:
 		return size;
 	}
 
-	//const int& operator [] (int& index)
-	//{//  Перегрузка оператора []
-	//	return array[index];
-	//}
+	const T& operator [] (int& index)
+	{//  Перегрузка оператора []
+		return plenty[index];
+	}
 
 	void print()
 	{
@@ -64,7 +64,6 @@ public:
 			std::cout << x << ' ';
 		}
 	}
-
 };
 
 class Money
@@ -75,20 +74,27 @@ class Money
 int main()
 {
 	srand(time(NULL));
-	Plenty <int> plenty;
+	setlocale(LC_ALL, "rus");
+	Plenty <int> plenty_first;
+	std::cout << "Первое множество: ";
+	for (int i = 0; i < 2 + rand() % 8; i++)
+	{
+		plenty_first.insert(rand() % 20);
+	}
+	plenty_first.print();
+	std::cout << "\nSize: " << plenty_first.Get_size() << std::endl << std::endl; // Debug
 	
-	plenty.insert(10);
-	plenty.insert(11);
-	plenty.insert(0);
-	plenty.insert(11);
-	plenty.insert(10);
-	plenty.insert(0);
-	plenty.insert(2);
-	plenty.insert(12);
+	Plenty <int> plenty_second;
+	std::cout << "Второе множество: ";
+	for (int i = 0; i < 2 + rand() % 8; i++)
+	{
+		plenty_second.insert(rand() % 20);
+	}
+	plenty_second.print();
+	std::cout << "\nSize: " << plenty_second.Get_size() << std::endl;
 
-	std::cout << plenty.Get_size() << std::endl; // Debug
-
-	plenty.print();
+	int n = rand() % plenty_first.Get_size();
+	std::cout << "\nplenty_first[n]: " << plenty_first[n] << std::endl;
 
 	return 0;
 }
