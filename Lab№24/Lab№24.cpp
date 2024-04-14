@@ -59,9 +59,8 @@ public:
 
 	const T& operator - (Plenty& other)
 	{//  Перегрузка оператора -
-		int index = 0;
 		if (size == other.Get_size())
-		{
+		{// Если размеры равны
 			for (int i = 0; i < size; i++)
 			{
 				int count = 0;
@@ -76,8 +75,37 @@ public:
 		}
 		else 
 		{
-			std::cout << "\nРазмеры не совпадают\n";
-			return -1;
+			if (size > other.Get_size())
+			{// Если size > other.Get_size()
+				int n = size - other.Get_size();
+				for (int i = 0; i < size; i++)
+				{
+					int count = 0;
+					for (int j = 0; j < size - n; j++)
+					{
+						if (plenty[i] != other[j])
+							count++;
+					}
+					if (count == size - n)
+						std::cout << plenty[i] << ' ';
+				}
+			}
+			else
+			{// Если size < other.Get_size()
+				int n = other.Get_size() - size;
+				size_t local_size = other.Get_size();
+				for (int i = 0; i < local_size - n; i++)
+				{
+					int count = 0;
+					for (int j = 0; j < local_size; j++)
+					{
+						if (plenty[i] != other[j])
+							count++;
+					}
+					if (count == local_size)
+						std::cout << plenty[i] << ' ';
+				}
+			}
 		}
 		return 0;
 	}
@@ -117,12 +145,12 @@ public:
 
 int main()
 {
-	/*srand(time(NULL));*/
+	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
 	// 1. Создаем первый объект типа Plenty, инициализируем и выводим на экран
 	Plenty <int> plenty_first;
 	std::cout << "Первое множество: ";
-	for (int i = 0; i < 3/*2 + rand() % 8*/; i++)
+	for (int i = 0; i < 2 + rand() % 8; i++)
 	{
 		plenty_first.insert(rand() % 20);
 	}
@@ -132,21 +160,21 @@ int main()
 	// 2. Создаем второй объект типа Plenty, инициализируем и выводим на экран
 	Plenty <int> plenty_second;
 	std::cout << "Второе множество: ";
-	for (int i = 0; i < 3/*2 + rand() % 8*/; i++)
+	for (int i = 0; i < 2 + rand() % 8; i++)
 	{
 		plenty_second.insert(rand() % 20);
 	}
 	plenty_second.print();
 	std::cout << "\nSize: " << plenty_second.Get_size() << std::endl;
 
-	// 3. Демонстрация перегрузки операции []
-	int n = rand() % plenty_first.Get_size();
-	std::cout << "\nplenty_first[n]: " << plenty_first[n] << std::endl;
-
-	// 4. Демонстрация работоспособности операции "-"(разности множеств)
+	// 3. Демонстрация работоспособности операции "-"(разности множеств)
 	std::cout << "\nРазность множества plenty_first к plenty_second: ";
 	plenty_first - plenty_second;
 	std::cout << std::endl;
 
+	// 4. Демонстрация перегрузки операции []
+	int n = rand() % plenty_first.Get_size();
+	std::cout << "\nplenty_first[n]: " << plenty_first[n] << std::endl;
+	
 	return 0;
 }
