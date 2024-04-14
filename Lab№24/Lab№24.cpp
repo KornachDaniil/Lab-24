@@ -59,54 +59,32 @@ public:
 
 	const T& operator - (Plenty& other)
 	{//  Перегрузка оператора -
-		if (size == other.Get_size())
-		{// Если размеры равны
-			for (int i = 0; i < size; i++)
-			{
-				int count = 0;
-				for (int j = 0; j < size; j++)
-				{
-					if (plenty[i] != other[j])
-						count++;
-				}
-				if (count == size)
-					std::cout << plenty[i] << ' ';
-			}
-		}
-		else 
+		size_t other_object_size = other.Get_size();
+		int in = 0;
+		int jn = 0;
+		int _size = size;
+
+		if (size > other_object_size)
+			jn = size - other_object_size;
+
+		else if (size < other.Get_size())
 		{
-			if (size > other.Get_size())
-			{// Если size > other.Get_size()
-				int n = size - other.Get_size();
-				for (int i = 0; i < size; i++)
-				{
-					int count = 0;
-					for (int j = 0; j < size - n; j++)
-					{
-						if (plenty[i] != other[j])
-							count++;
-					}
-					if (count == size - n)
-						std::cout << plenty[i] << ' ';
-				}
-			}
-			else
-			{// Если size < other.Get_size()
-				int n = other.Get_size() - size;
-				size_t local_size = other.Get_size();
-				for (int i = 0; i < local_size - n; i++)
-				{
-					int count = 0;
-					for (int j = 0; j < local_size; j++)
-					{
-						if (plenty[i] != other[j])
-							count++;
-					}
-					if (count == local_size)
-						std::cout << plenty[i] << ' ';
-				}
-			}
+			in = other_object_size - size;
+			_size = other_object_size;
 		}
+
+		for (int i = 0; i < _size - in; i++)
+		{
+			int count = 0;
+			for (int j = 0; j < _size - jn; j++)
+			{
+				if (plenty[i] != other[j])
+					count++;
+			}
+			if (count == _size - jn)
+				std::cout << plenty[i] << ' ';
+		}
+		
 		return 0;
 	}
 
