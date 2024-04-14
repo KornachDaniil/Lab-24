@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-template<typename T>
+template<typename T> //Инстанцирования класса Plenty для работы с различными типами данных
 class Plenty
 {
 private:
@@ -12,12 +12,12 @@ private:
 
 public:
 	Plenty()
-	{
+	{// Конструктор без параметров
 		size = 0;
 	}
 
 	void insert(T number)
-	{
+	{// Функция для размещения чисел в множестве
 		if (size == 0)
 		{
 			plenty.push_back(number);
@@ -29,7 +29,7 @@ public:
 			plenty.push_back(number);
 			size++;
 			if (size > 1)
-				sort(plenty.begin(), plenty.end());
+				sort(plenty.begin(), plenty.end()); // Сортировка в порядке возрастания
 		}
 	}
 
@@ -39,7 +39,7 @@ public:
 	}
 
 	bool coincidence(T& number)
-	{
+	{// Функция для отслеживания: существует ли данное число в множестве
 		for (int i = 0; i < size; i++)
 		{
 			if (plenty[i] == number)
@@ -48,7 +48,7 @@ public:
 	}
 
 	T Get_size()
-	{
+	{// Геттер для поля size
 		return size;
 	}
 
@@ -58,7 +58,7 @@ public:
 	}
 
 	const T& operator - (Plenty& other)
-	{//  Перегрузка оператора []
+	{//  Перегрузка оператора -
 		int index = 0;
 		if (size == other.Get_size())
 		{
@@ -83,7 +83,7 @@ public:
 	}
 
 	void print()
-	{
+	{// Вывод 
 		for (auto x : plenty)
 		{
 			std::cout << x << ' ';
