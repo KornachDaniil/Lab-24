@@ -11,9 +11,9 @@ private:
 	std::vector<T> plenty;
 
 public:
-	Plenty()
+	Plenty(size_t size = 0)
 	{// Конструктор без параметров
-		size = 0;
+		this->size = size;
 	}
 
 	void insert(T number)
@@ -33,10 +33,7 @@ public:
 		}
 	}
 
-	~Plenty()
-	{// Деструктор 
-		std::cout << "\nPlenty\n";
-	}
+	~Plenty() {} // Деструктор
 
 	bool coincidence(T& number)
 	{// Функция для отслеживания: существует ли данное число в множестве
@@ -97,29 +94,31 @@ public:
 	}
 };
 
-//template<typename T>
-//class Money : public Plenty
-//{
-//private:
-//	long rubles;
-//	int pennies;
-//public:
-//	Money()
-//	{
-//		rubles = 1 + rand() % 1000;
-//		pennies = rand() % 100;
-//	}
-//
-//	~Money()
-//	{
-//		std::cout << "\nMoney\n";
-//	}
-//
-//	void print()
-//	{
-//		std::cout << rubles << "," << pennies;
-//	}
-//};
+template<typename T>
+class Money : public Plenty <T>
+{
+private:
+	long rubles;
+	int pennies;
+public:
+	Money()
+	{// Конструктор без параметров
+		rubles = 1 + rand() % 1000;
+		pennies = rand() % 100;
+	}
+
+	~Money() {} // Деструктор
+
+	T Get_rubles()
+	{//  Геттер поля rubles
+		return rubles;
+	}
+
+	void print()
+	{// Функция вывода полей класса Money
+		std::cout << rubles << "," << pennies;
+	}
+};
 
 int main()
 {
@@ -152,7 +151,35 @@ int main()
 
 	// 4. Демонстрация перегрузки операции []
 	int n = rand() % plenty_first.Get_size();
-	std::cout << "\nplenty_first[n]: " << plenty_first[n] << std::endl;
+	std::cout << "\nplenty_first[" << n << "]: " << plenty_first[n] << std::endl << std::endl;
+
+	// 5.Демонстрация выполнения операция для контейнера, содержащий элементы пользовательского класса
+	std::cout << "Демонстрация выполнения операция для контейнера, содержащий элементы пользовательского класса: \n";
+	//5.1 Cоздаем 4 объекта типа Money и инициализируем
+	Money <int> money_1;
+	Money <int> money__1;
+	Money <int> money_2;
+	Money <int> money__2;
 	
+	//5.2 Создаем объект plenty_third типа Plenty и инициализируем его
+	Plenty <int> plenty_third;
+	plenty_third.insert(money_1.Get_rubles());
+	plenty_third.insert(money__1.Get_rubles());
+	std::cout << "plenty_third: ";
+	plenty_third.print();
+	//5.3 Создаем объект plenty_four типа Plenty и инициализируем его
+	Plenty <int> plenty_four;
+	plenty_four.insert(money_2.Get_rubles());
+	plenty_four.insert(money__2.Get_rubles());
+	std::cout << "\nplenty_four: ";
+	plenty_four.print();
+
+	//5.4 Демонстриурем операцию "-"
+	std::cout << "\nРазность: ";
+	plenty_third - plenty_four;
+	std::cout << std::endl << "Демонстрация корректного вывода через запятую: ";
+	money_1.print();
+	std::cout << std::endl;
+
 	return 0;
 }
